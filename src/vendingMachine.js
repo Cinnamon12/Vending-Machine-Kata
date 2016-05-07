@@ -21,7 +21,7 @@ function vendingMachineController() {
     }
   };
   this.currentAmount = 0,
-  this.displayMessage = "",
+  this.displayMessage = "INSERT COIN",
   this.coinsInMachine = {
     0.05: 0,
     0.10: 0,

@@ -78,6 +78,10 @@ describe('vending machine', function() {
     expect(vm.displayMessage).toEqual(vm.currentAmount);
   });
 
+  it('displays INSERT COIN when no coins inserted', function() {
+    expect(vm.displayMessage).toEqual("INSERT COIN");
+  })
+
 
 
 
