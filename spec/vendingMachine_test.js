@@ -35,7 +35,29 @@ describe('vending machine', function() {
       "thickness": 1.95
     };
     expect(vm.isCoinValid(coinAdded, validCoins)).toBeTruthy();
+    expect(coinAdded.value).toEqual(0.05);
   });
+
+  it('accepts dimes', function() {
+    let coinAdded = {
+      "weight": 2.27,
+      "diameter": 17.91,
+      "thickness": 1.35
+    }
+    expect(vm.isCoinValid(coinAdded, validCoins)).toBeTruthy();
+    expect(coinAdded.value).toEqual(0.10);
+  });
+
+  it('accepts quarters', function() {
+    let coinAdded = {
+      "weight": 5.67,
+      "diameter": 24.26,
+      "thickness": 1.75
+    }
+    expect(vm.isCoinValid(coinAdded, validCoins)).toBeTruthy();
+    expect(coinAdded.value).toEqual(0.25);
+  });
+
 
 });
 
