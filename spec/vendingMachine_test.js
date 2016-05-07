@@ -1,5 +1,5 @@
 describe('vending machine', function() {
-  let vm, validCoins;
+  let vm, validCoins, products;
   beforeEach(function () {
     vm = new vendingMachineController();
     validCoins = {
@@ -20,6 +20,20 @@ describe('vending machine', function() {
         "diameter": 24.26,
         "thickness": 1.75,
         "value": 0.25
+      }
+    },
+    products = {
+      "cola": {
+        "price": 1.00,
+        "quantity": 0
+      },
+      "chips": {
+        "price": 0.50,
+        "quantity": 10
+      },
+      "candy": {
+        "price": 0.65,
+        "quantity": 5
       }
     };
   });
@@ -69,7 +83,7 @@ describe('vending machine', function() {
     expect(vm.returnedCoins[0]).toEqual(coinAdded);
   });
 
-  it('displays current amount when valid coin is inserted', function(){
+  it('displays current amount when valid coin is inserted', function() {
     let coinAdded = validCoins.quarter;
     vm.processCoinReceived(coinAdded);
     expect(vm.currentAmount).toEqual(0.25);
@@ -82,7 +96,15 @@ describe('vending machine', function() {
 
   it('displays INSERT COIN when no coins inserted', function() {
     expect(vm.displayMessage).toEqual("INSERT COIN");
-  })
+  });
+
+  it('dispenses product and displays THANK YOU when enough money has been inserted', function() {
+    let selectedProduct = products.chips;
+    vm.dispenseProducts(selectedProduct, 0.50);
+    expect(selectedProduct.quantity).toEqual(9);
+    expect(vm.displayMessage).toEqual("THANK YOU");
+    expect(vm.currentAmount).toEqual(0);
+  });
 
 
 
