@@ -1,6 +1,7 @@
 "use strict";
 function vendingMachineController() {
-  var validCoins = {
+  let vm = this,
+  validCoins = {
     "nickel": {
       "weight": 5.00,
       "diameter": 21.21,
@@ -20,15 +21,17 @@ function vendingMachineController() {
       "value": 0.25
     }
   };
-  this.currentAmount = 0,
-  this.displayMessage = "INSERT COIN",
-  this.coinsInMachine = {
+  vm.currentAmount = 0,
+  vm.displayMessage = "INSERT COIN",
+  vm.coinsInMachine = {
     0.05: 0,
     0.10: 0,
     0.25: 0
   };
-  this.isCoinValid = isCoinValid;
-  this.processCoinReceived = processCoinReceived;
+  vm.returnedCoins = [];
+  vm.isCoinValid = isCoinValid;
+  vm.processCoinReceived = processCoinReceived;
+  vm.rejectCoins = rejectCoins;
 
   function isCoinValid(coinAdded) {
     let validProperty;
@@ -47,11 +50,16 @@ function vendingMachineController() {
 
   function processCoinReceived(coinAdded) {
     if (isCoinValid(coinAdded)) {
-      this.coinsInMachine[coinAdded.value] += 1;
-      this.currentAmount += coinAdded.value;
-      this.displayMessage = this.currentAmount;
+      vm.coinsInMachine[coinAdded.value] += 1;
+      vm.currentAmount += coinAdded.value;
+      vm.displayMessage = vm.currentAmount;
     }
+  }
 
+  function rejectCoins(coinAdded){
+    if(!isCoinValid(coinAdded)){
+      vm.returnedCoins.push(coinAdded);
+    }
   }
 
 

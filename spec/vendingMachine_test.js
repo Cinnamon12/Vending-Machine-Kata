@@ -65,6 +65,8 @@ describe('vending machine', function() {
       "thickness": 1.52
     }
     expect(vm.isCoinValid(coinAdded)).toBeFalsy();
+    vm.rejectCoins(coinAdded);
+    expect(vm.returnedCoins[0]).toEqual(coinAdded);
   });
 
   it('displays current amount when valid coin is inserted', function(){
