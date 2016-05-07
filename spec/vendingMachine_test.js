@@ -34,7 +34,7 @@ describe('vending machine', function() {
       "diameter": 21.21,
       "thickness": 1.95
     };
-    expect(vm.isCoinValid(coinAdded, validCoins)).toBeTruthy();
+    expect(vm.isCoinValid(coinAdded)).toBeTruthy();
     expect(coinAdded.value).toEqual(0.05);
   });
 
@@ -44,7 +44,7 @@ describe('vending machine', function() {
       "diameter": 17.91,
       "thickness": 1.35
     }
-    expect(vm.isCoinValid(coinAdded, validCoins)).toBeTruthy();
+    expect(vm.isCoinValid(coinAdded)).toBeTruthy();
     expect(coinAdded.value).toEqual(0.10);
   });
 
@@ -54,7 +54,7 @@ describe('vending machine', function() {
       "diameter": 24.26,
       "thickness": 1.75
     }
-    expect(vm.isCoinValid(coinAdded, validCoins)).toBeTruthy();
+    expect(vm.isCoinValid(coinAdded)).toBeTruthy();
     expect(coinAdded.value).toEqual(0.25);
   });
 
@@ -64,7 +64,18 @@ describe('vending machine', function() {
       "diameter": 19.05,
       "thickness": 1.52
     }
-    expect(vm.isCoinValid(coinAdded, validCoins)).toBeFalsy();
+    expect(vm.isCoinValid(coinAdded)).toBeFalsy();
+  });
+
+  it('displays current amount when valid coin is inserted', function(){
+    let coinAdded = validCoins.quarter;
+    vm.processCoinReceived(coinAdded);
+    expect(vm.currentAmount).toEqual(0.25);
+    expect(vm.displayMessage).toEqual(vm.currentAmount);
+    coinAdded = validCoins.dime;
+    vm.processCoinReceived(coinAdded);
+    expect(vm.currentAmount).toEqual(0.35);
+    expect(vm.displayMessage).toEqual(vm.currentAmount);
   });
 
 
