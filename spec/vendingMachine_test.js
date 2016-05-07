@@ -58,6 +58,17 @@ describe('vending machine', function() {
     expect(coinAdded.value).toEqual(0.25);
   });
 
+  it('does not accept pennies', function() {
+    let coinAdded = {
+      "weight": 2.50,
+      "diameter": 19.05,
+      "thickness": 1.52
+    }
+    expect(vm.isCoinValid(coinAdded, validCoins)).toBeFalsy();
+  });
+
+
+
 
 });
 
