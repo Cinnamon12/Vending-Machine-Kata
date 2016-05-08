@@ -33,6 +33,7 @@ function vendingMachineController() {
   vm.processCoinReceived = processCoinReceived;
   vm.rejectCoins = rejectCoins;
   vm.dispenseProducts = dispenseProducts;
+  vm.initialDisplay = initialDisplay;
 
   function isCoinValid(coinAdded) {
     let validProperty;
@@ -68,10 +69,17 @@ function vendingMachineController() {
       selectedProduct.quantity -= 1;
       vm.displayMessage="THANK YOU";
       vm.currentAmount = 0;
-    }
+      }
   }
 
-
+  function initialDisplay(currentAmount) {
+    if (currentAmount === 0) {
+      vm.displayMessage = "INSERT COIN";
+    }
+    else{
+      vm.displayMessage = currentAmount;
+    }
+  }
 
 
 }

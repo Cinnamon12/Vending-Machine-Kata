@@ -106,6 +106,14 @@ describe('vending machine', function() {
     expect(vm.currentAmount).toEqual(0);
   });
 
+   it('displays INSERT COIN after dispensing product', function() {
+    let selectedProduct = products.chips;
+    vm.dispenseProducts(selectedProduct, 0.50);
+    alert(vm.currentAmount);
+    vm.initialDisplay(vm.currentAmount);
+    expect(vm.displayMessage).toEqual("INSERT COIN");
+  });
+
 
 
 
