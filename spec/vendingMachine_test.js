@@ -120,6 +120,19 @@ describe('vending machine', function() {
     expect(vm.displayMessage).toEqual("PRICE: " + 0.65);
   });
 
+   it(' displays either INSERT COIN or current amount when enough money has not been inserted', function() {
+    let selectedProduct = products.candy;
+    vm.currentAmount = 0.25;
+    vm.notEnoughMoneyInserted(selectedProduct, vm.currentAmount);
+    vm.initialDisplay(vm.currentAmount);
+    expect(vm.displayMessage).toEqual(vm.currentAmount);
+    vm.currentAmount = 0;
+    vm.initialDisplay(vm.currentAmount);
+    expect(vm.displayMessage).toEqual("INSERT COIN");
+  });
+
+
+
 
 
 
