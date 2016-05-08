@@ -34,6 +34,7 @@ function vendingMachineController() {
   vm.rejectCoins = rejectCoins;
   vm.dispenseProducts = dispenseProducts;
   vm.initialDisplay = initialDisplay;
+  vm.notEnoughMoneyInserted = notEnoughMoneyInserted;
 
   function isCoinValid(coinAdded) {
     let validProperty;
@@ -78,6 +79,12 @@ function vendingMachineController() {
     }
     else{
       vm.displayMessage = currentAmount;
+    }
+  }
+
+  function notEnoughMoneyInserted(selectedProduct, currentAmount) {
+    if (0 < currentAmount && currentAmount < selectedProduct.price) {
+      vm.displayMessage = "PRICE: " + selectedProduct.price;
     }
   }
 
