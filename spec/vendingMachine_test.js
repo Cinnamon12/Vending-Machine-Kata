@@ -142,8 +142,9 @@ describe('vending machine', function() {
    it ('returns change when the amount in machine is more than the price of the selected item', function() {
     let selectedProduct = products.candy;
     vm.currentAmount = 1.00;
-    expect(vm.makeChange(selectedProduct, vm.currentAmount)).toEqual(0.35);
+    vm.makeChange(selectedProduct, vm.currentAmount);
+    expect(vm.returnedCoins).toContain(validCoins.quarter);
+    expect(vm.returnedCoins).toContain(validCoins.dime);
   });
-
 });
 

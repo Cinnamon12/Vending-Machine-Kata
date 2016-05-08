@@ -24,11 +24,12 @@ function vendingMachineController() {
   vm.currentAmount = 0,
   vm.displayMessage = "INSERT COIN",
   vm.coinsInMachine = {
-    0.05: 0,
-    0.10: 0,
-    0.25: 0
+    0.05: 10,
+    0.10: 10,
+    0.25: 10
   };
-  vm.returnedCoins = [];
+  vm.returnedCoins = [],
+  vm.amountToReturn = 0;
   vm.isCoinValid = isCoinValid;
   vm.processCoinReceived = processCoinReceived;
   vm.rejectCoins = rejectCoins;
@@ -69,7 +70,8 @@ function vendingMachineController() {
   function dispenseProducts(selectedProduct, currentAmount) {
     if (currentAmount == selectedProduct.price) {
       selectedProduct.quantity -= 1;
-      vm.displayMessage="THANK YOU";
+      vm.displayMessage = "THANK YOU";
+      makeChange(selectedProduct, currentAmount);
       vm.currentAmount = 0;
       }
   }
@@ -91,14 +93,52 @@ function vendingMachineController() {
 
   function makeChange(selectedProduct, currentAmount) {
     if (selectedProduct.price < currentAmount) {
-      return returnMoney(currentAmount - selectedProduct.price, currentAmount);
+      vm.amountToReturn = currentAmount - selectedProduct.price;
+      returnChange(vm.amountToReturn);
     }
-    else return 0;
+    else {
+      vm.amountToReturn = 0;
+    }
+    return vm.amountToReturn;
   }
 
-  function returnMoney(money, currentAmount) {
-    currentAmount = 0;
-    return money;
+  function returnChange(amountToReturn) {
+    let noOfQuartersToReturn, noOfNickelsToReturn, noOfDimesToReturn = 0;
+    if(amountToReturn >= 0.25){
+      noOfQuartersToReturn = (Math.floor(amountToReturn/0.25));
+      amountToReturn -= noOfQuartersToReturn*0.25;
+      amountToReturn = amountToReturn.toFixed(2);
+      for(var i = noOfQuartersToReturn; i > 0; i--) {
+        if(vm.coinsInMachine[0.25] != 0) {
+          vm.coinsInMachine[0.25] -= 1;
+          vm.returnedCoins.push(validCoins.quarter);
+        }
+      }
+    }
+    if(amountToReturn >= 0.10) {
+      noOfDimesToReturn = (Math.floor(amountToReturn/0.10));
+      amountToReturn -= noOfDimesToReturn*0.10;
+      amountToReturn = amountToReturn.toFixed(2);
+      for(var i = noOfDimesToReturn; i > 0; i--) {
+        if(vm.coinsInMachine[0.10] != 0){
+          vm.coinsInMachine[0.10] -= 1;
+          vm.returnedCoins.push(validCoins.dime);
+        }
+      }
+    }
+    if(amountToReturn >= 0.05) {
+      noOfNickelsToReturn = (Math.floor(amountToReturn/0.05));
+      alert(noOfNickelsToReturn);
+      amountToReturn -= noOfNickelsToReturn*0.05;
+      amountToReturn = amountToReturn.toFixed(2);
+      for(var i = noOfNickelsToReturn; i > 0; i--) {
+        if(vm.coinsInMachine[0.05] != 0){
+          vm.coinsInMachine[0.05] -= 1;
+          vm.returnedCoins.push(validCoins.nickel);
+        }
+      }
+    }
+    return vm.returnedCoins;
   }
 
 }
