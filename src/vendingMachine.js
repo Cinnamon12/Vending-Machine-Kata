@@ -38,6 +38,7 @@ function vendingMachineController() {
   vm.makeChange = makeChange;
   vm.returnCoins = returnCoins;
   vm.soldOut = soldOut;
+  vm.isExactChangeOnly = isExactChangeOnly;
 
   function isCoinValid(coinAdded) {
     let validProperty;
@@ -149,8 +150,23 @@ function vendingMachineController() {
 
   function soldOut(selectedProduct) {
     if (selectedProduct.quantity === 0) {
-      this.displayMessage = "SOLD OUT";
+      vm.displayMessage = "SOLD OUT";
     }
   }
 
+  function isExactChangeOnly(products) {
+    for (var key in products) {
+      if(products.hasOwnProperty(key)) {
+        vm.returnedCoins = returnChange(products[key].price);
+        if(vm.returnedCoins.length === 0) {
+          vm.displayMessage = "EXACT CHANGE ONLY";
+          return true;
+        }
+        else{
+          vm.displayMessage = "INSERT COIN";
+          return false;
+        }
+      }
+    }
+  }
 }

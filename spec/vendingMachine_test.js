@@ -141,6 +141,7 @@ describe('vending machine', function() {
 
    it ('returns change when the amount in machine is more than the price of the selected item', function() {
     let selectedProduct = products.candy;
+
     vm.currentAmount = 1.00;
     vm.makeChange(selectedProduct, vm.currentAmount);
     expect(vm.returnedCoins).toContain(validCoins.quarter);
@@ -166,5 +167,21 @@ describe('vending machine', function() {
     expect(vm.displayMessage).toEqual("SOLD OUT");
   });
 
+   it('indicates if exact change is required', function() {
+    vm.coinsInMachine = {
+      0.05: 0,
+      0.10: 0,
+      0.25: 0
+    };
+    expect(vm.isExactChangeOnly(products)).toBeTruthy();
+    expect(vm.displayMessage).toEqual("EXACT CHANGE ONLY");
+    vm.coinsInMachine = {
+      0.05: 10,
+      0.10: 10,
+      0.25: 10
+    };
+    expect(vm.isExactChangeOnly(products)).toBeFalsy();
+    expect(vm.displayMessage).toEqual("INSERT COIN");
+  });
 });
 
