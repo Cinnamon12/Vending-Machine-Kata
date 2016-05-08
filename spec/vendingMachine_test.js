@@ -106,12 +106,20 @@ describe('vending machine', function() {
     expect(vm.currentAmount).toEqual(0);
   });
 
-  //  it('displays INSERT COIN after dispensing product', function() {
-  //   let selectedProduct = products.chips;
-  //   vm.dispenseProducts(selectedProduct, 0.50);
-  //   vm.initialDisplay(vm.currentAmount);
-  //   expect(vm.displayMessage).toEqual("INSERT COIN");
-  // });
+  it('dispenses product and displays THANK YOU when enough money has been inserted', function() {
+    let selectedProduct = products.chips;
+    vm.dispenseProducts(selectedProduct, 0.50);
+    expect(selectedProduct.quantity).toEqual(9);
+    expect(vm.displayMessage).toEqual("THANK YOU");
+    expect(vm.currentAmount).toEqual(0);
+  });
+
+   it('displays INSERT COIN after dispensing product', function() {
+    let selectedProduct = products.chips;
+    vm.dispenseProducts(selectedProduct, 0.50);
+    vm.initialDisplay(vm.currentAmount);
+    expect(vm.displayMessage).toEqual("INSERT COIN");
+  });
 
    it('displays price when enough money has not been inserted', function() {
     let selectedProduct = products.candy;
@@ -131,11 +139,11 @@ describe('vending machine', function() {
     expect(vm.displayMessage).toEqual("INSERT COIN");
   });
 
-
-
-
-
-
+   it ('returns change when the amount in machine is more than the price of the selected item', function() {
+    let selectedProduct = products.candy;
+    vm.currentAmount = 1.00;
+    expect(vm.makeChange(selectedProduct, vm.currentAmount)).toEqual(0.35);
+  });
 
 });
 

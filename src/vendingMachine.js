@@ -35,6 +35,7 @@ function vendingMachineController() {
   vm.dispenseProducts = dispenseProducts;
   vm.initialDisplay = initialDisplay;
   vm.notEnoughMoneyInserted = notEnoughMoneyInserted;
+  vm.makeChange = makeChange;
 
   function isCoinValid(coinAdded) {
     let validProperty;
@@ -88,5 +89,16 @@ function vendingMachineController() {
     }
   }
 
+  function makeChange(selectedProduct, currentAmount) {
+    if (selectedProduct.price < currentAmount) {
+      return returnMoney(currentAmount - selectedProduct.price, currentAmount);
+    }
+    else return 0;
+  }
+
+  function returnMoney(money, currentAmount) {
+    currentAmount = 0;
+    return money;
+  }
 
 }
