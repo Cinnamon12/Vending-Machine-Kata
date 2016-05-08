@@ -158,5 +158,13 @@ describe('vending machine', function() {
     vm.initialDisplay(vm.currentAmount);
     expect(vm.displayMessage).toEqual("INSERT COIN");
   });
+
+   it ('displays "SOLD OUT" when the selected item is not available', function() {
+    let selectedProduct = products.cola;
+    vm.currentAmount = 1.00;
+    vm.soldOut(selectedProduct);
+    expect(vm.displayMessage).toEqual("SOLD OUT");
+  });
+
 });
 

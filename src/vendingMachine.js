@@ -37,6 +37,7 @@ function vendingMachineController() {
   vm.notEnoughMoneyInserted = notEnoughMoneyInserted;
   vm.makeChange = makeChange;
   vm.returnCoins = returnCoins;
+  vm.soldOut = soldOut;
 
   function isCoinValid(coinAdded) {
     let validProperty;
@@ -144,6 +145,12 @@ function vendingMachineController() {
   function returnCoins(amountToReturn) {
     vm.currentAmount = 0;
     return returnChange(amountToReturn);
+  }
+
+  function soldOut(selectedProduct) {
+    if (selectedProduct.quantity === 0) {
+      this.displayMessage = "SOLD OUT";
+    }
   }
 
 }
