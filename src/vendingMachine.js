@@ -28,8 +28,7 @@ function vendingMachineController() {
     0.10: 10,
     0.25: 10
   };
-  vm.returnedCoins = [],
-  vm.amountToReturn = 0;
+  vm.returnedCoins = [];
   vm.isCoinValid = isCoinValid;
   vm.processCoinReceived = processCoinReceived;
   vm.rejectCoins = rejectCoins;
@@ -37,6 +36,7 @@ function vendingMachineController() {
   vm.initialDisplay = initialDisplay;
   vm.notEnoughMoneyInserted = notEnoughMoneyInserted;
   vm.makeChange = makeChange;
+  vm.returnCoins = returnCoins;
 
   function isCoinValid(coinAdded) {
     let validProperty;
@@ -92,14 +92,15 @@ function vendingMachineController() {
   }
 
   function makeChange(selectedProduct, currentAmount) {
+    let amountToReturn;
     if (selectedProduct.price < currentAmount) {
-      vm.amountToReturn = currentAmount - selectedProduct.price;
-      returnChange(vm.amountToReturn);
+      amountToReturn = currentAmount - selectedProduct.price;
+      returnChange(amountToReturn);
     }
     else {
-      vm.amountToReturn = 0;
+      amountToReturn = 0;
     }
-    return vm.amountToReturn;
+    return amountToReturn;
   }
 
   function returnChange(amountToReturn) {
@@ -128,7 +129,6 @@ function vendingMachineController() {
     }
     if(amountToReturn >= 0.05) {
       noOfNickelsToReturn = (Math.floor(amountToReturn/0.05));
-      alert(noOfNickelsToReturn);
       amountToReturn -= noOfNickelsToReturn*0.05;
       amountToReturn = amountToReturn.toFixed(2);
       for(var i = noOfNickelsToReturn; i > 0; i--) {
@@ -139,6 +139,11 @@ function vendingMachineController() {
       }
     }
     return vm.returnedCoins;
+  }
+
+  function returnCoins(amountToReturn) {
+    vm.currentAmount = 0;
+    return returnChange(amountToReturn);
   }
 
 }

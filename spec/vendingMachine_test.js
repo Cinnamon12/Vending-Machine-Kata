@@ -146,5 +146,17 @@ describe('vending machine', function() {
     expect(vm.returnedCoins).toContain(validCoins.quarter);
     expect(vm.returnedCoins).toContain(validCoins.dime);
   });
+
+   it('returns coins when "return coin" is selected and displays INSERT COIN', function() {
+    let coinAdded = validCoins.dime;
+    vm.processCoinReceived(coinAdded);
+    coinAdded = validCoins.nickel;
+    vm.processCoinReceived(coinAdded);
+    vm.returnCoins(vm.currentAmount);
+    expect(vm.returnedCoins).toContain(validCoins.nickel);
+    expect(vm.returnedCoins).toContain(validCoins.dime);
+    vm.initialDisplay(vm.currentAmount);
+    expect(vm.displayMessage).toEqual("INSERT COIN");
+  });
 });
 
